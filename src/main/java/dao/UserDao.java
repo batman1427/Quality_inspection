@@ -1,7 +1,9 @@
 package dao;
 
-import model.User;
+import org.springframework.stereotype.Repository;
 
+import model.User;
+@Repository("UserDao")
 public interface UserDao {
     int deleteByPrimaryKey(String username);
 

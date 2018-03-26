@@ -18,11 +18,13 @@ public class UserServiceImpl implements UserService{
 	    private UserDao userDao;  
 	      
 	    @Override
-	    public String getstaffList() {  
+	    public User login(User user) {  
 	         
-	        User a=userDao.selectByPrimaryKey("xwz");
-	        System.out.println(a.getPassword());
-	           return null;
+	        User result=userDao.selectByPrimaryKey(user.getUsername());
+	        if(result!=null&&result.getPassword().equals(user.getPassword())) {
+	        	return result;
+	        }
+	        return null;
 	    }
 
 }

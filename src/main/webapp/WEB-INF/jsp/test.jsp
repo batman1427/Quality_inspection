@@ -8,11 +8,8 @@
 </head>  
 <body> 
     <form action="login" method="post">
-    <input name="username" type="text" class="input-box" />
-    <input name="password" type="text" class="input-box" />
      <input name="" type="submit" value="搜索" class="button" />
     </form>
 
 </body>
 </html>  
-

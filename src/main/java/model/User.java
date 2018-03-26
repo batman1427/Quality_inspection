@@ -12,6 +12,15 @@ public class User {
     private Integer blockFlag;
 
     private String createTime;
+    
+    public User() {
+    	super();
+    }
+    
+    public User(String username,String password) {
+    	this.username=username;
+    	this.password=password;
+    }
 
     public String getUsername() {
         return username;
@@ -60,4 +69,6 @@ public class User {
     public void setCreateTime(String createTime) {
         this.createTime = createTime == null ? null : createTime.trim();
     }
+    
+   
 }
