@@ -19,8 +19,10 @@ public class ShiroRealm extends AuthorizingRealm {
 
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
-
-        return null;
+    	 SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
+         User user = (User) principalCollection.getPrimaryPrincipal();
+         info.addRole(user.getRole());
+         return info;
     }
 
     @Override

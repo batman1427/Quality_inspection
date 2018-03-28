@@ -9,6 +9,8 @@ public class User {
 
     private String name;
 
+	private String role;
+
     private Integer blockFlag;
 
     private String createTime;
@@ -54,6 +56,14 @@ public class User {
         this.name = name == null ? null : name.trim();
     }
 
+    public String getRole() {
+		return role;
+	}
+
+	public void setRole(String role) {
+		this.role = role;
+	}
+	
     public Integer getBlockFlag() {
         return blockFlag;
     }

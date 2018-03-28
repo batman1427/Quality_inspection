@@ -29,6 +29,7 @@
         <property name="securityManager" ref="securityManager"/>
         <property name="loginUrl" value="/login"/>
         <property name="unauthorizedUrl" value="/login"/>
+        <property name="successUrl" value="/main" />  
         <property name="filters">
             <map>
                 <entry key="roles" value-ref="roleAuth"></entry>
@@ -38,9 +39,8 @@
             <value>
                 / = anon
                 /login = anon
-                /logout = anon
-                /plugins/** = anon
-                /material/** = anon
+                /dashboard = authc
+               
             
             </value>
         </property>

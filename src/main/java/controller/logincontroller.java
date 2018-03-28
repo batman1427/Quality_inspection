@@ -1,6 +1,7 @@
 package controller;
 
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 
 import javax.naming.AuthenticationException;
 import javax.servlet.http.HttpServletRequest;
@@ -14,12 +15,17 @@ import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.LockedAccountException;
 import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import model.Authority;
+import model.User;
+import service.AuthorityService;
+import service.InitialDataService;
 import service.UserService;
 
 @Controller
@@ -27,32 +33,48 @@ public class logincontroller {
 	
 	private Logger log = LoggerFactory.getLogger(logincontroller.class);
 	@Autowired  
-    private UserService otherService;   
+    private UserService userService;  
+	@Autowired  
+    private AuthorityService authorityService;   
+	@Autowired  
+    private InitialDataService initialDataService;   
 	
-	@RequestMapping(value = {"","sign_in"})
+	@RequestMapping(value = {"","login"})
 	public String signIn(HttpServletResponse response,
 			HttpServletRequest request,HttpSession session) {
 		
-		return "home";
+		return "login";
 	}
 	
-	@RequestMapping(value = {"login"})
-	public String login(HttpServletResponse response,
-			HttpServletRequest request,HttpSession session) throws UnsupportedEncodingException {
+	@RequestMapping(value = {"Authentication"})
+	public String Authentication(HttpServletResponse response,
+			HttpServletRequest request) throws UnsupportedEncodingException {
 		request.setCharacterEncoding("UTF-8");
 		String username = request.getParameter("username");
 		String password = request.getParameter("password");
-		System.out.println(1);
-	    shiroLogin(username,password);
-		return "test";
+	    User user=shiroLogin(username,password);
+	    if(user==null) {
+	    	 return "redirect:login";
+	    }
+	    HttpSession session =request.getSession();
+	    session.setAttribute("user", user);
+	    ArrayList<String> authority=initialDataService.getAuthority(username);
+	   
+	    //用户检测的产品类型，检测步骤，产品列表
+	    return "redirect:dashboard";
 	}
 	
-	private String shiroLogin(String username,String password) {  
-		System.out.println(2);
+	@RequestMapping(value = {"dashboard"})
+	public String login(HttpServletResponse response,
+			HttpServletRequest request,HttpSession session) throws UnsupportedEncodingException {
+		
+		return "dashboard";
+	}
+	
+	private User shiroLogin(String username,String password) {  
 		 	Subject currenUser = SecurityUtils.getSubject();
 		 	currenUser.logout();
 	        if(!currenUser.isAuthenticated()){
-	        	System.out.println(3);
 	        	UsernamePasswordToken token = new UsernamePasswordToken(username,password);
 	            //token.setRememberMe(true);
 	            try {
@@ -66,15 +88,19 @@ public class logincontroller {
 	            }
 	        }
 	        if(currenUser.isAuthenticated()) {
-	        	System.out.println("用户 "+currenUser.getPrincipal() +" 登录成功");
-	            log.info("用户 "+currenUser.getPrincipal() +" 登录成功");
+	            log.info("用户 "+ ((User)currenUser.getPrincipal()).getUsername()+" 登录成功");
 	        }
 	        //是否有role1这个角色
-	        if(currenUser.hasRole("role1")){
-	            log.info("有角色role1");
-	        }else{
-	            log.info("没有角色role1");
+	        if(currenUser.hasRole("admin")){
+	            log.info("具有管理员权限");
+	            return (User)currenUser.getPrincipal();
+	        }else if(currenUser.hasRole("normal")){
+	            log.info("具有普通用户权限");
+	            return (User)currenUser.getPrincipal();
+	        }else {
+	        	log.info("无权限");
 	        }
+	        
 			return null;
 	}  
 }

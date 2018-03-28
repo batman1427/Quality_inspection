@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="dao.ProcedureDao">
+  <resultMap id="BaseResultMap" type="model.Procedure">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <id column="equipmentid" jdbcType="VARCHAR" property="equipmentid" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="block_flag" jdbcType="INTEGER" property="blockFlag" />
+    <result column="create_time" jdbcType="VARCHAR" property="createTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, equipmentid, name, block_flag, create_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="model.Procedure" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from procedure
+    where id = #{id,jdbcType=INTEGER}
+      and equipmentid = #{equipmentid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="model.Procedure">
+    delete from procedure
+    where id = #{id,jdbcType=INTEGER}
+      and equipmentid = #{equipmentid,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="model.Procedure">
+    insert into procedure (id, equipmentid, name, 
+      block_flag, create_time)
+    values (#{id,jdbcType=INTEGER}, #{equipmentid,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
+      #{blockFlag,jdbcType=INTEGER}, #{createTime,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="model.Procedure">
+    insert into procedure
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="equipmentid != null">
+        equipmentid,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="blockFlag != null">
+        block_flag,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="equipmentid != null">
+        #{equipmentid,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="blockFlag != null">
+        #{blockFlag,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="model.Procedure">
+    update procedure
+    <set>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="blockFlag != null">
+        block_flag = #{blockFlag,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+      and equipmentid = #{equipmentid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="model.Procedure">
+    update procedure
+    set name = #{name,jdbcType=VARCHAR},
+      block_flag = #{blockFlag,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+      and equipmentid = #{equipmentid,jdbcType=VARCHAR}
+  </update>
+</mapper>

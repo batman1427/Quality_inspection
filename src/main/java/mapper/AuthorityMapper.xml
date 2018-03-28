@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="dao.AuthorityDao">
+  <resultMap id="BaseResultMap" type="model.Authority">
+    <id column="username" jdbcType="VARCHAR" property="username" />
+    <id column="equipmentid" jdbcType="VARCHAR" property="equipmentid" />
+    <id column="procedureid" jdbcType="INTEGER" property="procedureid" />
+    <result column="block_flag" jdbcType="INTEGER" property="blockFlag" />
+    <result column="create_time" jdbcType="VARCHAR" property="createTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    username, equipmentid, procedureid, block_flag, create_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="model.Authority" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from authority
+    where username = #{username,jdbcType=VARCHAR}
+      and equipmentid = #{equipmentid,jdbcType=VARCHAR}
+      and procedureid = #{procedureid,jdbcType=INTEGER}
+  </select>
+   <select id="selectByUsername" parameterType="model.Authority" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from authority
+    where username = #{username,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="model.Authority">
+    delete from authority
+    where username = #{username,jdbcType=VARCHAR}
+      and equipmentid = #{equipmentid,jdbcType=VARCHAR}
+      and procedureid = #{procedureid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="model.Authority">
+    insert into authority (username, equipmentid, procedureid, 
+      block_flag, create_time)
+    values (#{username,jdbcType=VARCHAR}, #{equipmentid,jdbcType=VARCHAR}, #{procedureid,jdbcType=INTEGER}, 
+      #{blockFlag,jdbcType=INTEGER}, #{createTime,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="model.Authority">
+    insert into authority
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="username != null">
+        username,
+      </if>
+      <if test="equipmentid != null">
+        equipmentid,
+      </if>
+      <if test="procedureid != null">
+        procedureid,
+      </if>
+      <if test="blockFlag != null">
+        block_flag,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="username != null">
+        #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="equipmentid != null">
+        #{equipmentid,jdbcType=VARCHAR},
+      </if>
+      <if test="procedureid != null">
+        #{procedureid,jdbcType=INTEGER},
+      </if>
+      <if test="blockFlag != null">
+        #{blockFlag,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="model.Authority">
+    update authority
+    <set>
+      <if test="blockFlag != null">
+        block_flag = #{blockFlag,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where username = #{username,jdbcType=VARCHAR}
+      and equipmentid = #{equipmentid,jdbcType=VARCHAR}
+      and procedureid = #{procedureid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="model.Authority">
+    update authority
+    set block_flag = #{blockFlag,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=VARCHAR}
+    where username = #{username,jdbcType=VARCHAR}
+      and equipmentid = #{equipmentid,jdbcType=VARCHAR}
+      and procedureid = #{procedureid,jdbcType=INTEGER}
+  </update>
+</mapper>

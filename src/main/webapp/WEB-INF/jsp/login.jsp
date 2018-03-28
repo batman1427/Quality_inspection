@@ -7,10 +7,10 @@
 <title>home</title>  
 </head>  
 <body> 
-    <form action="login" method="post">
+    <form action="Authentication" method="post">
     <input name="username" type="text" class="input-box" />
     <input name="password" type="text" class="input-box" />
-     <input name="" type="submit" value="搜索" class="button" />
+     <input name="" type="submit" value="登录页面" class="button" />
     </form>
 
 </body>
