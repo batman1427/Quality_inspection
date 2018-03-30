@@ -40,7 +40,9 @@
                 / = anon
                 /login = anon
                 /dashboard = authc
-               
+                /logout = anon
+                /admin =roles["admin"]
+                /admin/* = roles["admin"]
             
             </value>
         </property>

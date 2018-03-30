@@ -37,16 +37,20 @@ public class logincontroller {
 	
 	private Logger log = LoggerFactory.getLogger(logincontroller.class);
 	@Autowired  
-    private UserService userService;  
-	@Autowired  
-    private AuthorityService authorityService;   
-	@Autowired  
-    private InitialDataService initialDataService;   
+    private UserService userService;   
 	
 	@RequestMapping(value = {"","login"})
 	public String signIn(HttpServletResponse response,
 			HttpServletRequest request,HttpSession session) {
 		
+		return "login";
+	}
+	
+	@RequestMapping(value = {"logout"})
+	public String logout(HttpServletResponse response,
+			HttpServletRequest request,HttpSession session) {
+		Subject currenUser = SecurityUtils.getSubject();
+	 	currenUser.logout();
 		return "login";
 	}
 	
@@ -66,13 +70,6 @@ public class logincontroller {
 	    }
 	    //用户检测的产品类型，检测步骤，产品列表
 	    return map;
-	}
-	
-	@RequestMapping(value = {"dashboard"})
-	public String login(HttpServletResponse response,
-			HttpServletRequest request,HttpSession session) throws UnsupportedEncodingException {
-		 //ArrayList<String> authorityList=initialDataService.getAuthority(username);
-		return "dashboard";
 	}
 	
 	private User shiroLogin(String username,String password) {  
