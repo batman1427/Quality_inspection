@@ -14,23 +14,23 @@
   <select id="selectByPrimaryKey" parameterType="model.Procedure" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    from procedure
+    from `procedure`
     where id = #{id,jdbcType=INTEGER}
       and equipmentid = #{equipmentid,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="model.Procedure">
-    delete from procedure
+    delete from `procedure`
     where id = #{id,jdbcType=INTEGER}
       and equipmentid = #{equipmentid,jdbcType=VARCHAR}
   </delete>
   <insert id="insert" parameterType="model.Procedure">
-    insert into procedure (id, equipmentid, name, 
+    insert into `procedure` (id, equipmentid, name, 
       block_flag, create_time)
     values (#{id,jdbcType=INTEGER}, #{equipmentid,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
       #{blockFlag,jdbcType=INTEGER}, #{createTime,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="model.Procedure">
-    insert into procedure
+    insert into `procedure`
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
         id,
@@ -67,7 +67,7 @@
     </trim>
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="model.Procedure">
-    update procedure
+    update `procedure`
     <set>
       <if test="name != null">
         name = #{name,jdbcType=VARCHAR},
@@ -83,7 +83,7 @@
       and equipmentid = #{equipmentid,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="model.Procedure">
-    update procedure
+    update `procedure`
     set name = #{name,jdbcType=VARCHAR},
       block_flag = #{blockFlag,jdbcType=INTEGER},
       create_time = #{createTime,jdbcType=VARCHAR}

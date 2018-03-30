@@ -1,5 +1,7 @@
 package service;
 
-public class ProcedureService {
+import model.Procedure;
 
+public interface ProcedureService {
+	public Procedure getProcedure(Procedure record);
 }

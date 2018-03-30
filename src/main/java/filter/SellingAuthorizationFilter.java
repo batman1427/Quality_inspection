@@ -10,9 +10,7 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import java.util.List;
 
-/**
- * Created by sunshine on 7/5/16.
- */
+
 public class SellingAuthorizationFilter extends AuthorizationFilter {
     private Logger logger = LoggerFactory.getLogger(SellingAuthorizationFilter.class);
 

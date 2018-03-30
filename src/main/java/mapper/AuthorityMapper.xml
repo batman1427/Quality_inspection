@@ -24,6 +24,7 @@
     <include refid="Base_Column_List" />
     from authority
     where username = #{username,jdbcType=VARCHAR}
+    order by equipmentid,procedureid
   </select>
   <delete id="deleteByPrimaryKey" parameterType="model.Authority">
     delete from authority

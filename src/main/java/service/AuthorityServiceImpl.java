@@ -19,9 +19,9 @@ public class AuthorityServiceImpl implements AuthorityService{
 			// TODO Auto-generated method stub
 			ArrayList<Authority> al=new ArrayList<Authority>();
 			al=authorityDao.selectByUsername(authority);
-			for(int i=0;i<al.size();i++) {
+			/*for(int i=0;i<al.size();i++) {
 				System.out.println(al.get(i).getProcedureid());
-			}
+			}*/
 			return al;
 		}  
 	      

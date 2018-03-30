@@ -11,6 +11,16 @@ public class Procedure{
 
     private String equipmentid;
     
+    public Procedure() {
+    	super();
+    }
+    
+    public Procedure(String equipmentid,int id) {
+    	this.equipmentid=equipmentid;
+    	this.id=id;
+    	
+    }
+    
     public Integer getId() {
         return id;
     }

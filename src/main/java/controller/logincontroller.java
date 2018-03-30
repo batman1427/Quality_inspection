@@ -2,6 +2,8 @@ package controller;
 
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.naming.AuthenticationException;
 import javax.servlet.http.HttpServletRequest;
@@ -20,6 +22,8 @@ import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import model.Authority;
@@ -46,28 +50,28 @@ public class logincontroller {
 		return "login";
 	}
 	
-	@RequestMapping(value = {"Authentication"})
-	public String Authentication(HttpServletResponse response,
+	@ResponseBody
+	@RequestMapping(value = {"Authentication"},method = RequestMethod.POST)
+	public  Map<String, Object> Authentication(HttpServletResponse response,
 			HttpServletRequest request) throws UnsupportedEncodingException {
 		request.setCharacterEncoding("UTF-8");
 		String username = request.getParameter("username");
 		String password = request.getParameter("password");
+	    Map<String, Object> map = new HashMap<String, Object>();
 	    User user=shiroLogin(username,password);
 	    if(user==null) {
-	    	 return "redirect:login";
+	    	  map.put("code", "0");
+	    }else {
+	    	  map.put("code", "1");
 	    }
-	    HttpSession session =request.getSession();
-	    session.setAttribute("user", user);
-	    ArrayList<String> authority=initialDataService.getAuthority(username);
-	   
 	    //用户检测的产品类型，检测步骤，产品列表
-	    return "redirect:dashboard";
+	    return map;
 	}
 	
 	@RequestMapping(value = {"dashboard"})
 	public String login(HttpServletResponse response,
 			HttpServletRequest request,HttpSession session) throws UnsupportedEncodingException {
-		
+		 //ArrayList<String> authorityList=initialDataService.getAuthority(username);
 		return "dashboard";
 	}
 	
